@@ -1,52 +1,56 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import HeroCard from "../components/HeroCard";
+import Navbar from "../components/Navbar";
+import Filters from "../components/Filters";
+
+import "./HeroList.css";
 
 export default function HeroList() {
   const [heroes, setHeroes] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchLocal() {
-    const { data, error } = await supabase
-      .from("heroes")
-      .select("*")
-      .order("id");
-
-    if (error) console.error(error);
-    return data || [];
-  }
-
-  async function fetchVercel() {
-    const res = await fetch("/api/heroes");
-    return await res.json();
-  }
-
   useEffect(() => {
-    async function load() {
-      let result;
+    async function loadHeroes() {
+      const res = await fetch("/api/heroes");
+      const json = await res.json();
 
-      if (window.location.hostname === "localhost") {
-        result = await fetchLocal();
-      } else {
-        result = await fetchVercel();
-      }
+      setHeroes(json.data || []);
+      setFiltered(json.data || []);
 
-      setHeroes(result);
       setLoading(false);
     }
-
-    load();
+    loadHeroes();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  function handleSearch(text) {
+    const lower = text.toLowerCase();
+
+    setFiltered(
+      heroes.filter(h =>
+        h.hero_name.toLowerCase().includes(lower) ||
+        h.title.toLowerCase().includes(lower)
+      )
+    );
+  }
 
   return (
-    <div>
-      <h1>Daftar Hero</h1>
-      <ul>
-        {heroes.map(h => (
-          <li key={h.id}>{h.hero_name} — {h.title}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Navbar />
+
+      <Filters onSearchChange={handleSearch} />
+
+      <div className="page-container">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="grid">
+            {filtered.map(hero => (
+              <HeroCard key={hero.id} hero={hero} />
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
