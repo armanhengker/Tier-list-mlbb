@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import HeroCard from "../components/HeroCard";
 import Navbar from "../components/Navbar";
 import Filters from "../components/Filters";
-
-import "./HeroList.css";
+import HeroCard from "../components/HeroCard";
+import "../styles/style.css";
 
 export default function HeroList() {
   const [heroes, setHeroes] = useState([]);
@@ -12,45 +11,51 @@ export default function HeroList() {
 
   useEffect(() => {
     async function loadHeroes() {
-      const res = await fetch("/api/heroes");
-      const json = await res.json();
+      try {
+        const res = await fetch("http://localhost:3000/api/heroes");
+        const json = await res.json();
 
-      setHeroes(json.data || []);
-      setFiltered(json.data || []);
-
-      setLoading(false);
+        // 🔥 API kamu mengembalikan ARRAY langsung, bukan { data: [] }
+        if (Array.isArray(json)) {
+          setHeroes(json);
+          setFiltered(json);
+        } else {
+          console.error("Unexpected API format:", json);
+          setHeroes([]);
+          setFiltered([]);
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setHeroes([]);
+        setFiltered([]);
+      } finally {
+        setLoading(false);
+      }
     }
+
     loadHeroes();
   }, []);
 
-  function handleSearch(text) {
-    const lower = text.toLowerCase();
-
-    setFiltered(
-      heroes.filter(h =>
-        h.hero_name.toLowerCase().includes(lower) ||
-        h.title.toLowerCase().includes(lower)
-      )
+  const handleSearch = (keyword) => {
+    const result = heroes.filter((h) =>
+      h.hero_name.toLowerCase().includes(keyword.toLowerCase())
     );
-  }
+    setFiltered(result);
+  };
+
+  if (loading) return <p className="loading">Loading...</p>;
 
   return (
-    <>
+    <div className="container">
       <Navbar />
 
-      <Filters onSearchChange={handleSearch} />
+      <Filters onSearch={handleSearch} />
 
-      <div className="page-container">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <div className="grid">
-            {filtered.map(hero => (
-              <HeroCard key={hero.id} hero={hero} />
-            ))}
-          </div>
-        )}
+      <div className="hero-grid">
+        {filtered.map((hero) => (
+          <HeroCard key={hero.id} hero={hero} />
+        ))}
       </div>
-    </>
+    </div>
   );
 }

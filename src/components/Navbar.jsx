@@ -1,9 +1,9 @@
-import "./src/style.css";
+import "../styles/style.css";
 
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <h2 className="logo">MLBB Tier List</h2>
+      <h1 className="logo">MLBB Tier List</h1>
     </nav>
   );
 }

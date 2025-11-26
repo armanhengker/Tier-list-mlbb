@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  background: #111;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  padding: 15px 25px;
+  background: #202020;
+  border-bottom: 2px solid #333;
+}
+
+.logo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Container */
+.container {
+  padding: 20px;
+}
+
+/* Search bar */
+.filter-bar {
+  margin: 20px 0;
+}
+
+.search-input {
+  width: 250px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* Grid hero */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+/* Card */
+.hero-card {
+  background: #1c1c1c;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #333;
+  transition: 0.2s;
+}
+
+.hero-card:hover {
+  transform: scale(1.05);
+}
+
+.hero-img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.hero-name {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.hero-title {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Meta */
+.hero-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.role {
+  color: #4db8ff;
+}
+
+.tier {
+  font-weight: bold;
+}

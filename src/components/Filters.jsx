@@ -1,12 +1,13 @@
-import "./src/style.css";
+import "../styles/style.css";
 
-export default function Filters({ onSearchChange }) {
+export default function Filters({ onSearch }) {
   return (
-    <div className="filters">
+    <div className="filter-bar">
       <input
         type="text"
         placeholder="Search hero..."
-        onChange={(e) => onSearchChange(e.target.value)}
+        className="search-input"
+        onChange={(e) => onSearch(e.target.value)}
       />
     </div>
   );
