@@ -761,3 +761,38 @@ body.dark {
   0%, 100% { box-shadow: 0 0 6px var(--accent); }
   50% { box-shadow: 0 0 16px var(--accent); }
 }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem;
+}
+
+/* ====== TOGGLE MODE (SEPERTI FOTO) ====== */
+
+.mode-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  color: var(--sidebar-text);
+  font-size: 15px;
+  cursor: pointer;
+
+  transition: 0.22s ease;
+}
+
+.mode-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(3px);
+}
+
+.mode-icon {
+  opacity: 0.8;
+}

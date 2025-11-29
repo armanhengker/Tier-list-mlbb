@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 
 export default function ThemeToggle() {
-  const getInitial = () => {
-    const stored = localStorage.getItem("theme");
-    if (stored) return stored;
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-  };
-
-  const [theme, setTheme] = useState(getInitial);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "dark"
+  );
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -16,11 +13,15 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className="theme-toggle"
-      onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-      aria-label="Toggle theme"
+      className="mode-btn"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      {theme === "dark" ? "☀️" : "🌙"}
+      {theme === "dark" ? (
+        <Sun size={17} className="mode-icon" />
+      ) : (
+        <Moon size={17} className="mode-icon" />
+      )}
+      <span>Mode</span>
     </button>
   );
 }

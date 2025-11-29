@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Home from "./pages/Home";
 import TierList from "./pages/TierList";
@@ -11,31 +11,25 @@ import Sidebar from "./components/Sidebar";
 import PageLoader from "./components/PageLoader";
 
 export default function App() {
-  const [theme, setTheme] = useState("dark");
   const [loading, setLoading] = useState(false);
-
   const location = useLocation();
 
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-  };
-
+  // 🔥 APPLY THEME DARI LOCALSTORAGE SAAT HALAMAN DILOAD
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    const saved = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
   }, []);
 
-  // 🔥 Trigger loading setiap ganti halaman
+  // Loading tiap ganti page
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 500); 
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(t);
   }, [location.pathname]);
 
   return (
     <div className="app-layout">
-      <Sidebar onToggleTheme={toggleTheme} />
+      <Sidebar />   {/* tidak perlu passing toggleTheme */}
 
       {loading && <PageLoader />}
 
