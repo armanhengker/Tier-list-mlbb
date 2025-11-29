@@ -1,0 +1,76 @@
+/* ==== PANEL BASE ==== */
+.counterpanel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 330px;
+    height: 100vh;
+    padding: 20px;
+    z-index: 9999;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease forwards;
+    border-left: 2px solid var(--border-accent);
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Slide animation */
+  @keyframes slideIn {
+    from { right: -350px; }
+    to { right: 0; }
+  }
+  
+  /* Close button */
+  .closebtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text);
+  }
+  
+  /* Header */
+  .panel-header {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .panel-hero-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+  }
+  
+  .panel-subtitle {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  
+  /* Grid for counter heroes */
+  .panel-counters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  /* ==== THEME SUPPORT ==== */
+  
+  /* Light mode */
+  body.light .counterpanel {
+    background: rgba(255, 255, 255, 0.7);
+    --text: #111;
+    --text-muted: #333;
+    --border-accent: #7c6bff;
+  }
+  
+  /* Dark mode */
+  body.dark .counterpanel {
+    background: rgba(20, 20, 30, 0.85);
+    --text: #fff;
+    --text-muted: #bbb;
+    --border-accent: #5f4aff;
+  }
+  
