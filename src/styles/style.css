@@ -1209,3 +1209,67 @@ body:has(.tier-page) .container {
   padding: 20px !important;
   width: calc(100% - -0px) !important;
 }
+
+/* ===========================
+      MOBILE NAVIGATION
+=========================== */
+.mobile-nav-wrapper {
+  display: none;
+}
+
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--color-bg);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999;
+}
+
+.mobile-nav a {
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-nav a.active {
+  color: var(--primary);
+}
+
+/* ===========================
+      RESPONSIVE LAYOUT
+=========================== */
+.sidebar-desktop {
+  display: block;
+}
+
+/* Mobile rules */
+@media (max-width: 768px) {
+  .sidebar-desktop {
+    display: none;
+  }
+
+  .mobile-nav-wrapper {
+    display: block;
+  }
+
+  .main-content {
+    padding-bottom: 65px; /* space for bottom nav */
+  }
+
+  .heroes-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .hero-card img {
+    width: 100%;
+    border-radius: 8px;
+  }
+}

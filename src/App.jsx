@@ -8,8 +8,8 @@ import HeroDetail from "./pages/HeroDetail";
 import About from "./pages/About";
 
 import Sidebar from "./components/Sidebar";
-import PageLoader from "./components/PageLoader";
 import MobileNav from "./components/MobileNav";
+import PageLoader from "./components/PageLoader";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -22,14 +22,22 @@ export default function App() {
 
   useEffect(() => {
     setLoading(true);
-    const t = setTimeout(() => setLoading(false), 400);
+    const t = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(t);
   }, [location.pathname]);
 
   return (
     <div className="app-layout">
-      {/* Sidebar = hanya tampil di Desktop */}
-      <Sidebar />
+
+      {/* Desktop Sidebar */}
+      <div className="sidebar-desktop">
+        <Sidebar />
+      </div>
+
+      {/* Mobile Bottom Navigation */}
+      <div className="mobile-nav-wrapper">
+        <MobileNav />
+      </div>
 
       {loading && <PageLoader />}
 
@@ -42,9 +50,6 @@ export default function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </main>
-
-      {/* Mobile Bottom Nav */}
-      <MobileNav />
     </div>
   );
 }
