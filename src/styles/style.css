@@ -796,3 +796,23 @@ body.dark {
 .mode-icon {
   opacity: 0.8;
 }
+
+body {
+  padding-bottom: 60px; /* ruang untuk navbar */
+}
+
+/* Hilangkan scroll horizontal */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Kartu hero rapi di mobile */
+.hero-card {
+  width: 100%;
+  margin: 8px 0;
+}
