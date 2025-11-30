@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Sidebar from "./components/Sidebar";
 import MobileNav from "./components/MobileNav";
 import PageLoader from "./components/PageLoader";
+import ThemeToggle from "./components/ThemeToggle";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,11 @@ export default function App() {
       {/* Desktop Sidebar */}
       <div className="sidebar-desktop">
         <Sidebar />
+      </div>
+
+      {/* Floating Theme Button (Mobile) */}
+      <div className="theme-floating">
+        <ThemeToggle />
       </div>
 
       {/* Mobile Bottom Navigation */}
