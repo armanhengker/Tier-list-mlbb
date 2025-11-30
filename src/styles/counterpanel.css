@@ -1,76 +1,285 @@
-/* ==== PANEL BASE ==== */
+/* =======================
+   COUNTERPANEL BASE
+======================= */
 .counterpanel {
-    position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 100vw;
+  height: 100vh;
+  padding: 24px;
+  z-index: 9999;
+  overflow-y: auto;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode */
+:root[data-theme="light"] .counterpanel {
+  background: rgba(255, 255, 255, 0.95);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .counterpanel {
+  background: rgba(15, 23, 32, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =======================
+   SLIDE ANIMATION
+======================= */
+@keyframes slideIn {
+  from {
+    right: -400px;
+    opacity: 0;
+  }
+  to {
     right: 0;
-    width: 330px;
-    height: 100vh;
+    opacity: 1;
+  }
+}
+
+/* =======================
+   CLOSE BUTTON
+======================= */
+.closebtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.closebtn:hover {
+  background: var(--card-hover);
+  transform: rotate(90deg);
+  box-shadow: var(--shadow-md);
+}
+
+/* =======================
+   PANEL HEADER
+======================= */
+.panel-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-hero-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  border: 3px solid var(--accent);
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.panel-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.panel-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =======================
+   COUNTER HEROES GRID
+======================= */
+.panel-counters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Counter Hero Cards Inside Panel */
+.panel-counters .hero-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  transition: all 0.25s ease;
+}
+
+.panel-counters .hero-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+
+.panel-counters .hero-img-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.panel-counters .hero-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+/* =======================
+   EMPTY STATE
+======================= */
+.counterpanel .muted {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =======================
+   SCROLLBAR INSIDE PANEL
+======================= */
+.counterpanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.counterpanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.counterpanel::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+.counterpanel::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* =======================
+   BACKDROP OVERLAY
+======================= */
+.counterpanel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  animation: fadeInBackdrop 0.3s ease;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* =======================
+   RESPONSIVE - TABLET
+======================= */
+@media (max-width: 1024px) {
+  .counterpanel {
+    width: 340px;
     padding: 20px;
-    z-index: 9999;
-    overflow-y: auto;
-    animation: slideIn 0.3s ease forwards;
-    border-left: 2px solid var(--border-accent);
-    backdrop-filter: blur(8px);
   }
-  
-  /* Slide animation */
-  @keyframes slideIn {
-    from { right: -350px; }
-    to { right: 0; }
+
+  .panel-counters {
+    gap: 12px;
   }
-  
-  /* Close button */
-  .closebtn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: transparent;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--text);
+}
+
+/* =======================
+   RESPONSIVE - MOBILE
+======================= */
+@media (max-width: 768px) {
+  .counterpanel {
+    width: 100%;
+    right: 0;
+    padding: 20px 16px;
+    padding-bottom: 90px; /* Space for bottom nav */
   }
-  
-  /* Header */
-  .panel-header {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
+
   .panel-hero-img {
     width: 90px;
     height: 90px;
-    border-radius: 50%;
   }
-  
-  .panel-subtitle {
-    margin-top: 4px;
-    font-size: 14px;
-    color: var(--text-muted);
+
+  .panel-header h2 {
+    font-size: 22px;
   }
-  
-  /* Grid for counter heroes */
+
   .panel-counters {
-    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .closebtn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}
+
+/* =======================
+   RESPONSIVE - SMALL MOBILE
+======================= */
+@media (max-width: 480px) {
+  .counterpanel {
+    padding: 16px 12px;
+    padding-bottom: 90px;
+  }
+
+  .panel-hero-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .panel-header h2 {
+    font-size: 20px;
+  }
+
+  .panel-counters {
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
   }
-  
-  /* ==== THEME SUPPORT ==== */
-  
-  /* Light mode */
-  body.light .counterpanel {
-    background: rgba(255, 255, 255, 0.7);
-    --text: #111;
-    --text-muted: #333;
-    --border-accent: #7c6bff;
+
+  .panel-counters .hero-card {
+    padding: 8px;
   }
-  
-  /* Dark mode */
-  body.dark .counterpanel {
-    background: rgba(20, 20, 30, 0.85);
-    --text: #fff;
-    --text-muted: #bbb;
-    --border-accent: #5f4aff;
+
+  .panel-counters .hero-name {
+    font-size: 11px;
   }
-  
+}

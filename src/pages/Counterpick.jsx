@@ -38,6 +38,9 @@ export default function Counterpick() {
   return (
     <div className="page counter-page">
       <h1>Counterpick</h1>
+      <p className="muted" style={{ marginBottom: '20px' }}>
+        Search and select a hero to view their counter picks
+      </p>
 
       <input
         className="search-input"
@@ -46,57 +49,72 @@ export default function Counterpick() {
         onChange={(e) => setQ(e.target.value)}
       />
 
-      <div className="search-results">
-        {results.map((h) => (
-          <div
-            key={h.id}
-            className="result-row"
-            onClick={() => setSelected(h)}
-          >
-            <img src={h.image_url} alt={h.hero_name} className="small-thumb" />
-            <div>{h.hero_name}</div>
-          </div>
-        ))}
-      </div>
+      {q && results.length > 0 && (
+        <div className="search-results">
+          {results.map((h) => (
+            <div
+              key={h.id}
+              className="result-row"
+              onClick={() => {
+                setSelected(h);
+                setQ(""); // Clear search after selection
+              }}
+            >
+              <img src={h.image_url} alt={h.hero_name} className="small-thumb" />
+              <div>
+                <div style={{ fontWeight: 600 }}>{h.hero_name}</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  {h.role}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {selected && (
-        <div className="counterpanel">
+        <>
+          {/* Backdrop */}
+          <div className="counterpanel-backdrop" onClick={closePanel} />
+          
+          {/* Panel */}
+          <div className="counterpanel">
+            <button className="closebtn" onClick={closePanel}>×</button>
 
-          <button className="closebtn" onClick={closePanel}>×</button>
+            <div className="panel-header">
+              <img src={selected.image_url} alt={selected.hero_name} className="panel-hero-img" />
+              <h2>{selected.hero_name}</h2>
+              <p className="panel-subtitle">Hero Counters</p>
+            </div>
 
-          <div className="panel-header">
-            <img src={selected.image_url} className="panel-hero-img" />
-            <h2>{selected.hero_name}</h2>
-            <p className="panel-subtitle">Hero Counters</p>
+            {counters.length === 0 ? (
+              <div className="muted">
+                No counterpick data available for this hero yet.
+              </div>
+            ) : (
+              <div className="panel-counters">
+                {counters.map((id) => {
+                  const hero = allHeroes.find(h => h.id === id);
+
+                  if (!hero) {
+                    return (
+                      <HeroCard
+                        key={id}
+                        hero={{
+                          id,
+                          hero_name: "Loading...",
+                          image_url: "/default.png"
+                        }}
+                      />
+                    );
+                  }
+
+                  return <HeroCard key={id} hero={hero} />;
+                })}
+              </div>
+            )}
           </div>
-
-          {counters.length === 0 ? (
-            <div className="muted">
-              No counterpick data yet for this hero.
-            </div>
-          ) : (
-            <div className="panel-counters">
-              {counters.map((id) => {
-                const hero = allHeroes.find(h => h.id === id);
-
-                if (!hero) {
-                  return (
-                    <HeroCard
-                      key={id}
-                      hero={{
-                        id,
-                        hero_name: "Loading...",
-                        image_url: "/default.png"
-                      }}
-                    />
-                  );
-                }
-
-                return <HeroCard key={id} hero={hero} />;
-              })}
-            </div>
-          )}
-        </div>
+        </>
       )}
     </div>
   );

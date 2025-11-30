@@ -54,44 +54,46 @@ export default function TierList() {
     });
 
   return (
-    <div className="page tier-page" style={{ paddingTop: "100px" }}>
-      <h1 className="tier-heading">Tier List</h1>
-
-      <Filters
-        roles={roles}
-        lanes={lanes}
-        onChange={(f) => setFilter((p) => ({ ...p, ...f }))}
-      />
+    <div className="page tier-page-fixed">
+      <div className="tier-header-section">
+        <h1 className="tier-heading">Tier List</h1>
+        
+        <Filters
+          roles={roles}
+          lanes={lanes}
+          onChange={(f) => setFilter((p) => ({ ...p, ...f }))}
+        />
+      </div>
 
       {loading ? (
-        <div className="tier-loading"></div>
+        <div className="tier-loading-center">
+          <div className="loader-ring"></div>
+        </div>
       ) : (
-        TIERS.map((t) => {
-          const tierHeroes = applyFilter(
-            heroes.filter(
-              (h) =>
-                (h.tier_rating || "").toLowerCase() === t.toLowerCase()
-            )
-          );
+        <div className="tier-container">
+          {TIERS.map((t) => {
+            const tierHeroes = applyFilter(
+              heroes.filter(
+                (h) =>
+                  (h.tier_rating || "").toLowerCase() === t.toLowerCase()
+              )
+            );
 
-          return (
-            <section key={t} className="tier-section">
-              <h2 className="tier-title">{t}</h2>
+            if (tierHeroes.length === 0) return null;
 
-              <div className="grid-heroes">
-                {tierHeroes.map((h) => (
-                  <HeroCard key={h.id} hero={h} />
-                ))}
-
-                {tierHeroes.length === 0 && (
-                  <div className="no-heroes">
-                    No heroes in this tier
-                  </div>
-                )}
-              </div>
-            </section>
-          );
-        })
+            return (
+              <section key={t} className="tier-section-compact">
+                <div className="tier-label">{t}</div>
+                
+                <div className="tier-heroes-row">
+                  {tierHeroes.map((h) => (
+                    <HeroCard key={h.id} hero={h} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
       )}
     </div>
   );
