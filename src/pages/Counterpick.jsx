@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getHeroes } from "../services/heroService";
 import { counterpicksById } from "../data/counterpicks";
 import HeroCard from "../components/HeroCard";
-import "../styles/counterpanel.css"; // tambahkan ini
+import "../styles/counterpanel.css";
 
 export default function Counterpick() {
   const [q, setQ] = useState("");
@@ -11,7 +11,6 @@ export default function Counterpick() {
   const [selected, setSelected] = useState(null);
   const [counters, setCounters] = useState([]);
 
-  // Load all heroes once
   useEffect(() => {
     (async () => {
       const { data } = await getHeroes({});
@@ -19,7 +18,6 @@ export default function Counterpick() {
     })();
   }, []);
 
-  // Search hero
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -29,19 +27,16 @@ export default function Counterpick() {
     return () => (mounted = false);
   }, [q]);
 
-  // Load counter list
   useEffect(() => {
     if (!selected) return;
     const localCounter = counterpicksById[selected.id] || [];
     setCounters(localCounter);
   }, [selected]);
 
-  // Close panel
   const closePanel = () => setSelected(null);
 
   return (
-    <div className="page">
-
+    <div className="page counter-page">
       <h1>Counterpick</h1>
 
       <input
@@ -53,14 +48,17 @@ export default function Counterpick() {
 
       <div className="search-results">
         {results.map((h) => (
-          <div key={h.id} className="result-row" onClick={() => setSelected(h)}>
+          <div
+            key={h.id}
+            className="result-row"
+            onClick={() => setSelected(h)}
+          >
             <img src={h.image_url} alt={h.hero_name} className="small-thumb" />
             <div>{h.hero_name}</div>
           </div>
         ))}
       </div>
 
-      {/* PANEL SAMPING */}
       {selected && (
         <div className="counterpanel">
 
@@ -73,7 +71,9 @@ export default function Counterpick() {
           </div>
 
           {counters.length === 0 ? (
-            <div className="muted">No counterpick data yet for this hero.</div>
+            <div className="muted">
+              No counterpick data yet for this hero.
+            </div>
           ) : (
             <div className="panel-counters">
               {counters.map((id) => {
@@ -96,7 +96,6 @@ export default function Counterpick() {
               })}
             </div>
           )}
-
         </div>
       )}
     </div>

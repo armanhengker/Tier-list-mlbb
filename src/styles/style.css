@@ -816,3 +816,396 @@ html, body {
   width: 100%;
   margin: 8px 0;
 }
+
+/* ============================
+   MOBILE NAVBAR (HP ONLY)
+============================ */
+.mobile-navbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  /* HILANGKAN SIDEBAR DI HP */
+  .sidebar {
+    display: none !important;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 16px;
+    padding-bottom: 90px; /* Ruang untuk navbar bawah */
+  }
+
+  .mobile-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: var(--card);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 11px;
+    color: var(--text);
+    gap: 4px;
+  }
+
+  .mobile-nav-item.active {
+    color: var(--accent);
+  }
+}
+
+/* ========================
+   TIER LIST RESPONSIVE
+======================== */
+
+.tier-page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.tier-heading {
+  margin-bottom: 20px;
+}
+
+/* GRID AUTO RESPONSIVE */
+.grid-heroes {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  margin-top: 20px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .grid-heroes {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+}
+
+/* HP */
+@media (max-width: 768px) {
+  .tier-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .grid-heroes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+/* HP kecil */
+@media (max-width: 420px) {
+  .grid-heroes {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.grid-heroes {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* LAPTOP */
+  gap: 1rem;
+}
+
+/* ============================= */
+/* ✨ MOBILE MODE OPTIMIZATION  */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  /* Hide sidebar in mobile */
+  .desktop-sidebar {
+    display: none !important;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding-bottom: 80px; /* space for bottom nav */
+  }
+
+  /* HERO GRID */
+  .grid-heroes {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .hero-card img {
+    height: 90px;
+    object-fit: cover;
+  }
+
+  .hero-name {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .tier-title {
+    font-size: 18px;
+  }
+}
+
+/* ================= MOBILE ONLY ================= */
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  /* Hide sidebar */
+  .desktop-sidebar {
+    display: none !important;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    width: 100%;
+    padding-bottom: 80px;
+    margin-left: 0 !important;
+  }
+
+  /* BOTTOM NAV */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: var(--bg-main);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    z-index: 999;
+  }
+
+  .mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 11px;
+    color: var(--text);
+    gap: 4px;
+  }
+
+  .mobile-nav a.active {
+    color: #4f9cff;
+  }
+
+  .hero-img-wrapper img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .grid-heroes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px;
+  }
+
+  .hero-name {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .tier-title {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+/* Small phone */
+@media (max-width: 420px) {
+  .grid-heroes {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ================= MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+
+  .page {
+    padding: 14px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .grid-heroes {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px;
+  }
+
+  .hero-card img {
+    height: 100px;
+    object-fit: cover;
+  }
+
+  /* ---------- COUNTER PANEL ---------- */
+  .counterpanel {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-main);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .panel-counters {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+  }
+
+  /* ---------- HERO DETAIL ---------- */
+  .hero-detail-container {
+    flex-direction: column !important;
+  }
+
+  .hero-detail-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .hero-detail-desc {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+}
+
+/* SMALL PHONE */
+@media (max-width: 420px) {
+  .grid-heroes {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .panel-counters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* FIX: TierList ketutup sidebar */
+.tier-page {
+  margin-left: 260px;   /* sesuaikan dengan lebar sidebar kamu */
+  padding-right: 20px;
+}
+
+/* Biar responsive di layar kecil */
+@media (max-width: 768px) {
+  .tier-page {
+    margin-left: 0;
+  }
+}
+
+/* FIX: TierList terlalu ke bawah */
+.tier-page {
+  padding-top: 20px !important;
+  margin-top: 0 !important;
+}
+
+/* Judul jangan terlalu jauh dari atas */
+.tier-page .tier-heading {
+  margin-top: 0 !important;
+}
+
+/* =========================
+   FIX HALAMAN TIER LIST
+   Biar mepet ke sidebar
+========================= */
+.tier-page {
+  margin-left: 0 !important;
+  padding-left: 10px !important; /* kecil saja biar tidak nempel mentah */
+  width: 100% !important;
+}
+
+/* Kalau kamu pakai container di dalam tier-page */
+.tier-page .container,
+.tier-page .content,
+.tier-page .main-content {
+  margin-left: 0 !important;
+  padding-left: 10px !important;
+}
+
+/* Jaga jarak atas tetap rapi */
+.tier-page h1,
+.tier-page .tier-heading {
+  margin-top: 0 !important;
+}
+
+/* ===========================
+   FIX POSISI TIER LIST
+   Biar sejajar dengan sidebar
+=========================== */
+
+.tier-page {
+  margin-left: 260px !important; /* samakan lebar sidebar */
+  padding: 20px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* Biar aman kalau ada wrapper lain */
+body:has(.tier-page) .main-content,
+body:has(.tier-page) .content,
+body:has(.tier-page) .container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* =========================
+  FIX TIER LIST POSISI
+  Lebih mepet sidebar
+========================= */
+
+.tier-page {
+  margin-left: 215px !important; 
+  padding: 20px !important;
+  width: calc(100% - 215px) !important;
+}
+
+/* FIX TIER LIST - LEBIH DEKAT KE SIDEBAR */
+.tier-page {
+  margin-left: -70px !important; 
+  padding: 20px !important;
+  width: calc(100% - -0px) !important;
+}

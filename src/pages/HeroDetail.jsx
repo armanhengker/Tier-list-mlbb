@@ -45,6 +45,7 @@ export default function HeroDetail() {
           <p className="hero-detail-sub">{hero.title}</p>
 
           <div className="detail-info-grid">
+
             <div className="detail-item">
               <span>Role</span>
               <strong>{hero.role}</strong>
@@ -69,6 +70,7 @@ export default function HeroDetail() {
               <span>Release</span>
               <strong>{hero.release_year}</strong>
             </div>
+
           </div>
 
           <p className="hero-detail-desc">{hero.description}</p>

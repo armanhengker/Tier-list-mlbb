@@ -9,27 +9,27 @@ import About from "./pages/About";
 
 import Sidebar from "./components/Sidebar";
 import PageLoader from "./components/PageLoader";
+import MobileNav from "./components/MobileNav";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
 
-  // 🔥 APPLY THEME DARI LOCALSTORAGE SAAT HALAMAN DILOAD
   useEffect(() => {
     const saved = localStorage.getItem("theme") || "light";
     document.documentElement.setAttribute("data-theme", saved);
   }, []);
 
-  // Loading tiap ganti page
   useEffect(() => {
     setLoading(true);
-    const t = setTimeout(() => setLoading(false), 500);
+    const t = setTimeout(() => setLoading(false), 400);
     return () => clearTimeout(t);
   }, [location.pathname]);
 
   return (
     <div className="app-layout">
-      <Sidebar />   {/* tidak perlu passing toggleTheme */}
+      {/* Sidebar = hanya tampil di Desktop */}
+      <Sidebar />
 
       {loading && <PageLoader />}
 
@@ -42,6 +42,9 @@ export default function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </main>
+
+      {/* Mobile Bottom Nav */}
+      <MobileNav />
     </div>
   );
 }

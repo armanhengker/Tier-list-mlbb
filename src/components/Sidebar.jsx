@@ -4,7 +4,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Sidebar() {
   return (
-    <aside className="sidebar">
+    <aside className="sidebar desktop-sidebar">
       <div className="sidebar-header">
         <h2>MLBB</h2>
       </div>
@@ -16,7 +16,6 @@ export default function Sidebar() {
         <NavLink to="/about" className="sidebar-item">About</NavLink>
       </div>
 
-      {/* 🔥 theme toggle yang benar */}
       <div className="sidebar-footer">
         <ThemeToggle />
       </div>
