@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getHeroes } from "../services/heroService";
-import { counterpicksById } from "../data/counterpicks";
+// import { counterpicksById } from "../data/counterpicks"; // HAPUS INI KARENA KITA PAKAI DATABASE
 import HeroCard from "../components/HeroCard";
 import "../styles/counterpanel.css";
 
@@ -11,6 +11,7 @@ export default function Counterpick() {
   const [selected, setSelected] = useState(null);
   const [counters, setCounters] = useState([]);
 
+  // 1. Ambil semua hero saat pertama kali load (untuk referensi data counter)
   useEffect(() => {
     (async () => {
       const { data } = await getHeroes({});
@@ -18,6 +19,7 @@ export default function Counterpick() {
     })();
   }, []);
 
+  // 2. Fitur Pencarian Hero
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -27,11 +29,28 @@ export default function Counterpick() {
     return () => (mounted = false);
   }, [q]);
 
+  // 3. LOGIKA BARU: Saat hero dipilih, ambil data counter dari DATABASE (bukan file lokal)
   useEffect(() => {
     if (!selected) return;
-    const localCounter = counterpicksById[selected.id] || [];
-    setCounters(localCounter);
-  }, [selected]);
+
+    // Ambil data array dari kolom database 'counterpicks' (JSONB)
+    const dbCounters = selected.counterpicks || [];
+    
+    // Kita perlu mengubah data JSON (nama/object) menjadi Object Hero Lengkap
+    // agar HeroCard bisa menampilkan gambar dan role dengan benar.
+    const resolvedCounters = dbCounters.map(item => {
+        // Cek apakah format di database berupa String ("Fanny") atau Object ({name: "Fanny"})
+        const heroName = typeof item === 'object' && item.name ? item.name : item;
+
+        // Cari data hero lengkap di allHeroes berdasarkan nama
+        // Gunakan toLowerCase agar pencarian tidak case-sensitive
+        return allHeroes.find(h => 
+            h.hero_name.toLowerCase() === heroName.toLowerCase()
+        );
+    }).filter(item => item !== undefined); // Hapus jika hero tidak ditemukan di database
+
+    setCounters(resolvedCounters);
+  }, [selected, allHeroes]);
 
   const closePanel = () => setSelected(null);
 
@@ -93,24 +112,12 @@ export default function Counterpick() {
               </div>
             ) : (
               <div className="panel-counters">
-                {counters.map((id) => {
-                  const hero = allHeroes.find(h => h.id === id);
-
-                  if (!hero) {
-                    return (
-                      <HeroCard
-                        key={id}
-                        hero={{
-                          id,
-                          hero_name: "Loading...",
-                          image_url: "/default.png"
-                        }}
-                      />
-                    );
-                  }
-
-                  return <HeroCard key={id} hero={hero} />;
-                })}
+                {/* UPDATE: Karena 'counters' sekarang sudah berisi object hero lengkap 
+                   dari logika useEffect di atas, kita tinggal map langsung.
+                */}
+                {counters.map((hero) => (
+                  <HeroCard key={hero.id} hero={hero} />
+                ))}
               </div>
             )}
           </div>
